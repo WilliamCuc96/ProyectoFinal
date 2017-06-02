@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="proyecto" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN-6CIFN4GQ00G\SQLEXPRESS;Initial Catalog=proyecto;Integrated Security=True" SettingsObjectName="ProyectoFarmacia.Properties.Settings" SettingsPropertyName="proyectoConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Administrador" Member="Administrador">
+    <Type Name="Administrador">
+      <Column Name="idAdministrador" Type="System.String" DbType="NChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="apellido" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="telefono" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="direccion" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Association Name="Administrador_Administrador" Member="Administrador2" ThisKey="idAdministrador" OtherKey="idAdministrador" Type="Administrador" Cardinality="One" />
+      <Association Name="Administrador_Pedido" Member="Pedido" ThisKey="idAdministrador" OtherKey="idPedido" Type="Pedido" Cardinality="One" />
+      <Association Name="Administrador_Administrador" Member="Administrador1" ThisKey="idAdministrador" OtherKey="idAdministrador" Type="Administrador" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cliente" Member="cliente">
+    <Type Name="cliente">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="nit" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="direccion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="telefono" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="cliente_factura_detalle" Member="factura_detalle" ThisKey="id" OtherKey="factura_id" Type="factura_detalle" />
+      <Association Name="factura_cliente" Member="factura" ThisKey="id" OtherKey="id" Type="factura" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.factura" Member="factura">
+    <Type Name="factura">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="numero_factura" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="cliente_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="factura_cliente" Member="cliente" ThisKey="id" OtherKey="id" Type="cliente" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.factura_detalle" Member="factura_detalle">
+    <Type Name="factura_detalle">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="factura_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="producto_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="precio" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Association Name="cliente_factura_detalle" Member="cliente" ThisKey="factura_id" OtherKey="id" Type="cliente" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pedido" Member="Pedido">
+    <Type Name="Pedido">
+      <Column Name="idPedido" Type="System.String" DbType="NChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codigo" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="fecha" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="[precio unitario]" Member="precio_unitario" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="cantidad" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Association Name="Pedido_Pedido" Member="Pedido2" ThisKey="idPedido" OtherKey="idPedido" Type="Pedido" Cardinality="One" />
+      <Association Name="Administrador_Pedido" Member="Administrador" ThisKey="idPedido" OtherKey="idAdministrador" Type="Administrador" IsForeignKey="true" />
+      <Association Name="Pedido_Pedido" Member="Pedido1" ThisKey="idPedido" OtherKey="idPedido" Type="Pedido" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.producto" Member="producto">
+    <Type Name="producto">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codigo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(130)" CanBeNull="true" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="tipo" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="precio" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.idProveedor" Member="idProveedor">
+    <Type Name="idProveedor">
+      <Column Name="idProvedor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codigo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="apellido" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="nit" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="mail" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="telefono" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="direccion" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.idEmpleado" Member="idEmpleado">
+    <Type Name="idEmpleado">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="apellido" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="dpi" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="mail" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
